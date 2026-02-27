@@ -73,6 +73,16 @@ export class Renderer {
     };
   }
 
+  /** Center viewport on a world point at a given zoom level. */
+  centerOn(worldX: number, worldY: number, zoom?: number): void {
+    if (zoom !== undefined)
+      this.viewport.zoom = Math.max(0.2, Math.min(5, zoom));
+    this.viewport.offsetX =
+      this.viewport.width / 2 - worldX * this.viewport.zoom;
+    this.viewport.offsetY =
+      this.viewport.height / 2 - worldY * this.viewport.zoom;
+  }
+
   panBy(dx: number, dy: number): void {
     this.viewport.offsetX += dx;
     this.viewport.offsetY += dy;

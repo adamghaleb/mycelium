@@ -17,11 +17,11 @@ export default function RootLayout({
     <html lang="en" className="dark">
       <head>
         <link
-          href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&family=Inter:wght@300;400;500;600&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@300;400;500&display=swap"
           rel="stylesheet"
         />
       </head>
-      <body className="bg-[#0a0a0a] text-white antialiased overflow-hidden">
+      <body className="bg-[#060d14] text-white antialiased overflow-hidden">
         <TooltipProvider>{children}</TooltipProvider>
       </body>
     </html>

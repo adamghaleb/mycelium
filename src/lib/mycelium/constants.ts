@@ -84,7 +84,7 @@ export const COOLING_RATE = 0.9997;
 // Render
 // ---------------------------------------------------------------------------
 
-export const BG_COLOR = "#0a0a0a";
+export const BG_COLOR = "#060d14";
 export const PHYSICS_DT = 1 / 60; // 60Hz fixed timestep
 export const MAX_STEPS_PER_FRAME = 3;
 export const SNAPSHOT_INTERVAL = 2; // send to React every 2 frames (~30fps)

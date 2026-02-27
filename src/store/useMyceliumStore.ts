@@ -5,12 +5,10 @@
 
 import { create } from "zustand";
 import {
-  GraphNode,
   Message,
   SimulationSnapshot,
   SimulationParams,
 } from "@/lib/mycelium/types";
-import { Simulation } from "@/lib/mycelium/simulation";
 import { DEFAULT_PARAMS } from "@/lib/mycelium/constants";
 
 export interface MyceliumUIState {
@@ -23,6 +21,7 @@ export interface MyceliumUIState {
   // Interaction
   selectedNodeId: string | null;
   hoveredNodeId: string | null;
+  selectedNodeScreenPos: { x: number; y: number } | null;
 
   // Params (drives simulation)
   params: SimulationParams;
@@ -35,6 +34,7 @@ export interface MyceliumUIState {
   setMessages: (m: Message[]) => void;
   selectNode: (id: string | null) => void;
   hoverNode: (id: string | null) => void;
+  setSelectedNodeScreenPos: (pos: { x: number; y: number } | null) => void;
   updateParams: (p: Partial<SimulationParams>) => void;
   toggleRunning: () => void;
 
@@ -56,13 +56,15 @@ export const useMyceliumStore = create<MyceliumUIState>((set, get) => ({
   messages: [],
   selectedNodeId: null,
   hoveredNodeId: null,
+  selectedNodeScreenPos: null,
   params: { ...DEFAULT_PARAMS },
   isRunning: true,
 
   setSnapshot: (s) => set({ snapshot: s }),
   setMessages: (m) => set({ messages: m }),
-  selectNode: (id) => set({ selectedNodeId: id }),
+  selectNode: (id) => set({ selectedNodeId: id, selectedNodeScreenPos: null }),
   hoverNode: (id) => set({ hoveredNodeId: id }),
+  setSelectedNodeScreenPos: (pos) => set({ selectedNodeScreenPos: pos }),
   updateParams: (p) => set((state) => ({ params: { ...state.params, ...p } })),
   toggleRunning: () => set((state) => ({ isRunning: !state.isRunning })),
 

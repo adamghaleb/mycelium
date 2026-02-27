@@ -34,9 +34,28 @@ export default function MyceliumCanvas() {
     renderer.resize();
     sim.init(renderer.viewport.width, renderer.viewport.height);
 
-    // Wire snapshot callback to Zustand
+    // Center camera on the network with a comfortable zoom
+    renderer.centerOn(
+      renderer.viewport.width / 2,
+      renderer.viewport.height / 2,
+      0.85,
+    );
+
+    // Wire snapshot callback to Zustand + publish selected node screen pos
     sim.onSnapshot((snapshot) => {
       store.getState().setSnapshot(snapshot);
+
+      // Publish screen position of selected node
+      const selectedId = store.getState().selectedNodeId;
+      if (selectedId) {
+        const selectedNode = sim.nodes.get(selectedId);
+        if (selectedNode) {
+          const vp = renderer.viewport;
+          const sx = selectedNode.pos.x * vp.zoom + vp.offsetX;
+          const sy = selectedNode.pos.y * vp.zoom + vp.offsetY;
+          store.getState().setSelectedNodeScreenPos({ x: sx, y: sy });
+        }
+      }
     });
 
     sim.onMessagesChanged((messages) => {
@@ -147,7 +166,7 @@ export default function MyceliumCanvas() {
     <canvas
       ref={canvasRef}
       className="fixed inset-0 w-full h-full"
-      style={{ background: "#0a0a0a", cursor: "crosshair" }}
+      style={{ background: "#060d14", cursor: "crosshair" }}
       onMouseMove={handleMouseMove}
       onMouseDown={handleMouseDown}
       onMouseUp={handleMouseUp}
